@@ -49,7 +49,19 @@ function bookSearch(){
 
 		   		// create publish date if one exists
 		   		if(jdata.publishedDate) {
-		   			newH4.innerText = jdata.publishedDate
+		   			//newH4.innerText = jdata.publishedDate
+		   			var fecha =jdata.publishedDate
+		   			var fechaizq=[];
+		   			fechaizq=fecha.split("-")
+		   			var fechader=[];
+		   			
+
+		   			for(var i=0;i<fechaizq.length;i++){
+		   				fechader[i]=fechaizq[fechaizq.length-1]
+		   			}
+		   			fecha=fechader.join("-")
+		   			newH4.innerText= fecha
+
 		   		} else {
 		   			newH4.innerText = 'Fecha no encontrada'
 		   		}
