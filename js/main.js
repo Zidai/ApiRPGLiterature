@@ -1,24 +1,24 @@
 function bookSearch(){
-	// store user input
+	// ifentificar la busqueda con el Input
 	var search =  document.getElementById("search").value
-	// clear any previous data
+	// eliminar cualquier busqueda anterior
 	document.getElementById("results").innerHTML = ""
 
-	// make a data request
+	// Hacer la peticion al servidor de GOOGLE BOOKS
 	$.ajax({
-		// url for database 
+		// URL de la base de datos
 	    url: "https://www.googleapis.com/books/v1/volumes?q=" + search,
 	    dataType: "json",
 	    type: 'GET',
-	    // on success, do this
+	    // En caso de existo hacer...
 	    success: function(data) {
-	    	console.log(data)	
-		    // loop through data in data.items
+	    	//console.log(data)	
+		    // Ciclo para recopilar los datos en el JSON del atributo data.items
 		    for(var i = 0; i < data.items.length; i++){
-		   		// store current books volume info 
+		   		// guardar la informacion de los libros
 		   		var jdata = data.items[i].volumeInfo
-
-		   		// create elements
+		   		console.log(jdata)
+		   		// crear los elementos para visualizar en el HTML
 		   		var newColSm4 = document.createElement('div')
 		   		var newImg = document.createElement('img')
 		   		var newH2 = document.createElement('h2')
@@ -27,60 +27,54 @@ function bookSearch(){
 		   		var newAnchor = document.createElement('a')
 		   		
 		   		
-		   		// add classes to elements
+		   		// agregar clases a los elementos 
 		   		newColSm4.className = 'col-sm-12 col-md-8 col-md-offset-2 item'
 		   		newAnchor.className = 'btn btn-info'
 
-		   		// add text to tags
+		   		// agregar texto a los elementos
 		   		newH2.innerText = jdata.title
 		   		newAnchor.innerText = 'Mas Informacion'
 
-		   		// add href
+		   		// agregar href
 		   		newAnchor.href = jdata.infoLink
-		   		// set target
+		   		// colocar objetivo
 		   		newAnchor.setAttribute('target', '_blank')
 
-		   		// create image if one exists
+		   		// obtinene imagen del server de google si no la mia
 		   		if(jdata.imageLinks) {
 			   		newImg.src = jdata.imageLinks.thumbnail
 		   		} else {
 			   		newImg.src = '../img/nobook.jpg'
 		   		}
 
-		   		// create publish date if one exists
+		   		// obtiene la fecha de publicacion si no manda mensaje
 		   		if(jdata.publishedDate) {
 		   			//newH4.innerText = jdata.publishedDate
-		   			var fecha =jdata.publishedDate
-		   			var fechaizq=[];
-		   			fechaizq=fecha.split("-")
-		   			var fechader=[];
-		   			
-
-		   			for(var i=0;i<fechaizq.length;i++){
-		   				fechader[i]=fechaizq[fechaizq.length-1]
-		   			}
-		   			fecha=fechader.join("-")
-		   			newH4.innerText= fecha
-
+		   			var date =jdata.publishedDate
+		   			var dateOrg=[];
+		   			dateOrg=date.split("-")
+		   			dateOrg=dateOrg.reverse()
+		   			date=dateOrg.join("-")
+		   			newH4.innerText= date
 		   		} else {
 		   			newH4.innerText = 'Fecha no encontrada'
 		   		}
 
-		   		// create author if one exists
+		   		// obtiene el autor del libro si no hay manda un mensaje
 		   		if(jdata.authors) {
 			   		newH3.innerText = jdata.authors[0]
 		   		} else {
 			   		newH3.innerText = 'Autor sin Definir'
 		   		}
 
-		   		// add tags to document
+		   		// agrega los elementos al documento de HTML
 		   		newColSm4.appendChild(newImg)
 		   		newColSm4.appendChild(newH2)
 		   		newColSm4.appendChild(newH3)
 		   		newColSm4.appendChild(newH4)
 		   		newColSm4.appendChild(newAnchor)
 
-		   		// add results to the screen
+		   		// agrega el resultado a la pantalla
 		   		var results = document.getElementById("results")
 		   		results.appendChild(newColSm4)
 		    }

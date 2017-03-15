@@ -10,22 +10,23 @@ h2{
   font-weight: 700;
 }
 
-/*user input*/
+/*input del usuario*/
 #search{
   width: 100%;
   height: 45px;
   font-size: 18px;
+  text-align: center;
 }
-/*submit button*/
+/*Boton de busqueda*/
 
 
-/*results display*/
+/*Despliege de Resultados*/
 #results{
   font-family: sans-serif;
   text-align: center;
 }
 
-/*JavaScript created items*/
+/*Items creados en JavaScript */
 .item {
   height:250px;
   padding-top:20px;

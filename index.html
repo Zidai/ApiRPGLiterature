@@ -1,102 +1,62 @@
 <!doctype html>
-<!--<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>xhr01.com</title>
-    </head>
-    <body >
-        <h1>XHR01 ^_^</h1>
-        <div id="content"></div>
-    <script>
-      function handleResponse(response) {
-      for (var i = 0; i < response.items.length; i++) {
-        var item = response.items[i];
-        // in production code, item.text should have the HTML entities escaped.
-        document.getElementById("content").innerHTML += "<br>" + item.volumeInfo.title;
-      }
-    }
-    </script>
-    <script src="https://www.googleapis.com/books/v1/volumes?q=alquimista&callback=handleResponse"></script>
-  
-    </body>
-    <script src="js/lib/XHR.js"></script>
-python -m SimpleHTTPServer 8000
-
-</html>-->
-<!DOCTYPE html>
 <html>
-<head>
-	<!-- document title -->
-	<title>Google books api</title>
-	<!-- Bootstrap CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	<!-- custom CSS -->
-	<link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-	<div class="container">
-		<div class="row text-center">
-		  <div class="col-md-3">
-		  	<h1>Busca Libros</h1>
-		  	<!-- user input -->
-		    <input id="search" placeholder="Autor o Titulo" autofocus/>
-		    <br><br>
-		    <!-- user submit -->
-			<button id="button" class="btn btn-success">BUSCAR</button>
-		  </div>
-		  <!--Div that will hold the pie chart-->
-    	  
-		  <div class="col-md-9">
-		    <!-- display results -->
-		    <div id="results"></div>
-		  </div>
-		</div>
-		<div id="chart_div"></div>
-	</div>
-	
-	<!--Load the AJAX API-->
+  <head>
+    <title>Google Books Api</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+      <link rel="stylesheet" href="css/main.css">
+    </head>
+  <body>
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-3">
+          <h1>Busca Libros</h1>
+          <!--input de usuario -->
+          <input id="search" placeholder="Autor o Titulo" autofocus/>
+          <br><br>
+          <!-- Boton de busqueda-->
+          <button id="button" class="btn btn-success">BUSCAR</button>
+        </div>
+        <div class="col-md-9">
+          <!--Desplegar resultados -->
+          <div id="results"></div>
+        </div>
+      </div>
+      <div id="chart_div"></div>
+    </div>	
+    <!--cargar el AJAX de la api de CHARTS -->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript">
-
-      // Load the Visualization API and the corechart package.
+      // carga la visualizacion de Chart
       google.charts.load('current', {'packages':['corechart']});
-
-      // Set a callback to run when the Google Visualization API is loaded.
+      // Cuando Google responde carga la visualizacion de la API.
       google.charts.setOnLoadCallback(drawChart);
-
-      // Callback that creates and populates a data table,
-      // instantiates the pie chart, passes in the data and
-      // draws it.
+      // Callback que crea y rellena una tabla de datos,
+      // instancia el gráfico circular, pasa los datos y
+      // lo dibuja.
       function drawChart() {
-
-        // Create the data table.
+      // crea la tabla de datos.
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Ficcion', 3],
-          ['Misterio', 1],
-          ['Fantasia', 1],
-          ['Biografías', 1],
-          ['Terror', 2]
-        ]);
-
-        // Set chart options
+                     ['Ficcion', 3],
+                     ['Misterio', 1],
+                     ['Fantasia', 1],
+                     ['Biografías', 1],
+                     ['Terror', 2]
+                     ]);
+        // Atributos para el chart
         var options = {'title':'Generos Mas Leidos',
-        			   'is3D': true,
+                       'is3D': true,
                        'width':500,
                        'height':500};
-
-        // Instantiate and draw our chart, passing in some options.
+        // Instancia y dibuja nuestro chart, pasando en algunas opciones.
         var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
         chart.draw(data, options);
       }
     </script>
-
-	<!-- jQuery -->
-	<script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
-	<!-- custom JavaScript -->
-	<script src="js/main.js"></script>
-</body>
+    <!-- jQuery por si las dudas lol-->
+    <script src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
 </html>
