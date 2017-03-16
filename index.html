@@ -38,13 +38,7 @@
         var data = new google.visualization.DataTable();
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
-        data.addRows([
-                     ['Ficcion', 3],
-                     ['Misterio', 1],
-                     ['Fantasia', 1],
-                     ['Biografías', 1],
-                     ['Terror', 2]
-                     ]);
+        data.addRows(dataChart);
         // Atributos para el chart
         var options = {'title':'Generos Mas Leidos',
                        'is3D': true,
