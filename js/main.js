@@ -1,7 +1,5 @@
-var dataChart.length={
+var dataChart=[['Genero', 1]];
 
-}[['Genero', 0]];
-var inf;
 function bookSearch(){
 	// ifentificar la busqueda con el Input
 	var search =  document.getElementById("search").value
@@ -21,7 +19,7 @@ function bookSearch(){
 		    for(var i = 0; i < data.items.length; i++){
 		   		// guardar la informacion de los libros
 		   		var jdata = data.items[i].volumeInfo
-		   		inf=jdata
+
 		   		// crear los elementos para visualizar en el HTML
 		   		var newColSm4 = document.createElement('div')
 		   		var newImg = document.createElement('img')
@@ -29,7 +27,6 @@ function bookSearch(){
 		   		var newH3 = document.createElement('h3')
 		   		var newH4 = document.createElement('h4')
 		   		var newAnchor = document.createElement('a')
-		   		
 		   		
 		   		// agregar clases a los elementos 
 		   		newColSm4.className = 'col-sm-12 col-md-8 col-md-offset-2 item'
@@ -82,14 +79,17 @@ function bookSearch(){
 		   		var results = document.getElementById("results")
 		   		results.appendChild(newColSm4)
 
-		   		/*if(jdata.categories && jdata.pageCount){
+		   		if(jdata.categories && jdata.pageCount){
 					for(var j=0;j<dataChart.length;j++){
-						if(dataCHart[j][0]===jdata.categories[0]){
-							
+						if(dataChart[j][0]===jdata.categories[0]){
+							dataCHart[j][1]=dataCHart[j][1]+jdata.pageCount
+						}
+						else{
+							dataChart[dataChart.length]===[jdata.categories[0],jdata.pageCount]
 						}
 					}
 					
-		   		}*/
+		   		}
 		    }
 	    }
 	})
