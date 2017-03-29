@@ -1,5 +1,3 @@
-var dataChart=[['Genero', 1]];
-
 function bookSearch(){
 	// ifentificar la busqueda con el Input
 	var search =  document.getElementById("search").value
@@ -16,30 +14,33 @@ function bookSearch(){
 	    success: function(data) {
 	    	//console.log(data)	
 		    // Ciclo para recopilar los datos en el JSON del atributo data.items
-		    for(var i = 0; i < data.items.length; i++){
+		     for(var i = 0; i < data.items.length; i++){
 		   		// guardar la informacion de los libros
 		   		var jdata = data.items[i].volumeInfo
-
+		   		//console.log(data)
 		   		// crear los elementos para visualizar en el HTML
 		   		var newColSm4 = document.createElement('div')
 		   		var newImg = document.createElement('img')
-		   		var newH2 = document.createElement('h2')
-		   		var newH3 = document.createElement('h3')
-		   		var newH4 = document.createElement('h4')
-		   		var newAnchor = document.createElement('a')
-		   		
-		   		// agregar clases a los elementos 
+		   		var newTitle = document.createElement('h2')
+		   		var newAutor = document.createElement('h3')
+		   		var newDate = document.createElement('h4')
+				var newRank = document.createElement('h4')
+				var newPages = document.createElement('h4')
+				var newGenero = document.createElement('h4')
+				var newDes = document.createElement('p')
+				var newAnchor = document.createElement('a')
+		   		// agregar clases a los elementos
 		   		newColSm4.className = 'col-sm-12 col-md-8 col-md-offset-2 item'
 		   		newAnchor.className = 'btn btn-info'
 
 		   		// agregar texto a los elementos
-		   		newH2.innerText = jdata.title
-		   		newAnchor.innerText = 'Mas Informacion'
+		   		newTitle.innerText = jdata.title
+		   		newAnchor.innerText = 'Seleccionar libro'
 
-		   		// agregar href
-		   		newAnchor.href = jdata.infoLink
+		   		// agregar href 
 		   		// colocar objetivo
 		   		newAnchor.setAttribute('target', '_blank')
+				newAnchor.setAttribute('onclick', 'seleccionado(event)')
 
 		   		// obtinene imagen del server de google si no la mia
 		   		if(jdata.imageLinks) {
@@ -50,46 +51,64 @@ function bookSearch(){
 
 		   		// obtiene la fecha de publicacion si no manda mensaje
 		   		if(jdata.publishedDate) {
-		   			//newH4.innerText = jdata.publishedDate
+		   			//newDate.innerText = jdata.publishedDate
 		   			var date =jdata.publishedDate
 		   			var dateOrg=[];
 		   			dateOrg=date.split("-")
 		   			dateOrg=dateOrg.reverse()
 		   			date=dateOrg.join("-")
-		   			newH4.innerText= date
+		   			newDate.innerText= date
 		   		} else {
-		   			newH4.innerText = 'Fecha no encontrada'
+		   			newDate.innerText = 'Fecha no encontrada'
 		   		}
 
 		   		// obtiene el autor del libro si no hay manda un mensaje
 		   		if(jdata.authors) {
-			   		newH3.innerText = jdata.authors[0]
+			   		newAutor.innerText = jdata.authors[0];
 		   		} else {
-			   		newH3.innerText = 'Autor sin Definir'
+			   		newAutor.innerText = 'Autor sin Definir'
 		   		}
-
+				
+				if(jdata.averageRating) {
+					var ranking=jdata.averageRating +" "+"\u2605"
+			   		newRank.innerHTML = ranking
+		   		} else {
+			   		newRank.innerText = 'No tiene un Rating'
+		   		}
+				
+					//
+				if(jdata.pageCount) {
+					var numPaginas = jdata.pageCount + " paginas"
+			   		newPages.innerHTML = numPaginas
+		   		} else {
+			   		newPages.innerText = 'N'+"\u00FA"+'mero de p'+"\u00E1"+'ginas desconocido';
+		   		}
+				
+				if(jdata.categories) {
+			   		newGenero.innerText = jdata.categories[0];
+		   		} else {
+			   		newGenero.innerText = 'Sin Genero determinado';
+		   		}
+				
+				if(jdata.description) {
+			   		newDes.innerText = jdata.description;
+		   		} else {
+			   		newDes.innerText = 'Sin description';
+		   		}
 		   		// agrega los elementos al documento de HTML
-		   		newColSm4.appendChild(newImg)
-		   		newColSm4.appendChild(newH2)
-		   		newColSm4.appendChild(newH3)
-		   		newColSm4.appendChild(newH4)
-		   		newColSm4.appendChild(newAnchor)
-
+		   		newColSm4.appendChild(newImg);
+				newColSm4.appendChild(newRank);
+				newColSm4.appendChild(newTitle);
+		   		newColSm4.appendChild(newAutor);
+		   		newColSm4.appendChild(newDate);
+				newColSm4.appendChild(newPages);
+				newColSm4.appendChild(newGenero);
+          		//newColSm4.appendChild(newDes);
+				//Este va al final
+				newColSm4.appendChild(newAnchor);
 		   		// agrega el resultado a la pantalla
 		   		var results = document.getElementById("results")
 		   		results.appendChild(newColSm4)
-
-		   		if(jdata.categories && jdata.pageCount){
-					for(var j=0;j<dataChart.length;j++){
-						if(dataChart[j][0]===jdata.categories[0]){
-							dataCHart[j][1]=dataCHart[j][1]+jdata.pageCount
-						}
-						else{
-							dataChart[dataChart.length]===[jdata.categories[0],jdata.pageCount]
-						}
-					}
-					
-		   		}
 		    }
 	    }
 	})
